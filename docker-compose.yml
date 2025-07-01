@@ -1,0 +1,31 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  db:
+    image: postgres:14-alpine
+    container_name: problem_solver_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env
+    ports:
+      - "5432:5432" # Map port để có thể kết nối từ máy host
+    restart: unless-stopped
+
+  backend:
+    container_name: problem_solver_api
+    build: .
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./app:/app  # Mount code vào container để hot-reload
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

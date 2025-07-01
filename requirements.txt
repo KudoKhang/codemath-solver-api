@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+alembic
+psycopg2-binary
+python-dotenv
+pydantic
+
+# For development
+pytest
+httpx
+pytest-asyncio
+pre-commit
+flake8
+black
+isort
