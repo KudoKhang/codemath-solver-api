@@ -1,6 +1,6 @@
 from fastapi import HTTPException
-from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import Session
 
 from app.db.crud.crud_solution import crud_solution
 from app.schemas.solution import SolutionCreate, SolutionUpdate

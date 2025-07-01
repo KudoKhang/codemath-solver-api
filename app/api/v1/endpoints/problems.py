@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
@@ -7,7 +7,6 @@ from app.schemas.response import APIResponse
 from app.services.problem_service import ProblemService
 
 router = APIRouter()
-
 
 
 @router.get("/", response_model=APIResponse)

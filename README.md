@@ -35,7 +35,7 @@ Dockerfile            # Docker image
 
 1. **Clone the repo:**
    ```sh
-   git clone <repo-url>
+   git clone https://github.com/KudoKhang/codemath-solver-api
    cd codemath-solver-api
    ```
 2. **Configure environment:**

@@ -37,7 +37,9 @@ class ExplanationService:
             return crud_explanation.update(db, db_obj=db_explanation, obj_in=explanation_in)
         except IntegrityError:
             db.rollback()
-            raise HTTPException(status_code=400, detail="Update would violate a unique constraint or invalid problem_id.")
+            raise HTTPException(
+                status_code=400, detail="Update would violate a unique constraint or invalid problem_id."
+            )
 
     @staticmethod
     def delete_explanation(db: Session, explanation_id: int):
