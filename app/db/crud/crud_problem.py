@@ -34,5 +34,8 @@ class CRUDProblem(CRUDBase[Problem]):
             db.commit()
         return obj
 
+    def get_by_code(self, db: Session, problem_code: str):
+        return db.query(Problem).filter(Problem.problem_code == problem_code).first()
+
 
 crud_problem = CRUDProblem(Problem)

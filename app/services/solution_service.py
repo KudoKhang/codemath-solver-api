@@ -43,3 +43,9 @@ class SolutionService:
         if not db_solution:
             raise HTTPException(status_code=404, detail="Solution not found")
         return crud_solution.remove(db, id=solution_id)
+
+    @staticmethod
+    def get_accepted_solution_by_problem_id(db: Session, problem_id: int):
+        from app.db.models.solution import Solution
+
+        return db.query(Solution).filter(Solution.problem_id == problem_id, Solution.is_accepted).first()

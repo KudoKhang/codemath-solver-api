@@ -45,3 +45,7 @@ class ProblemService:
         if not db_problem:
             raise HTTPException(status_code=404, detail=PROBLEM_NOT_FOUND_MSG)
         return crud_problem.remove(db, id=problem_id)
+
+    @staticmethod
+    def get_problem_by_code(db: Session, problem_code: str):
+        return crud_problem.get_by_code(db, problem_code=problem_code)

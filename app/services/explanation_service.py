@@ -47,3 +47,9 @@ class ExplanationService:
         if not db_explanation:
             raise HTTPException(status_code=404, detail=EXPLANATION_NOT_FOUND_MSG)
         return crud_explanation.remove(db, id=explanation_id)
+
+    @staticmethod
+    def get_by_problem_id(db: Session, problem_id: int):
+        from app.db.models.explanation import Explanation
+
+        return db.query(Explanation).filter(Explanation.problem_id == problem_id).first()
