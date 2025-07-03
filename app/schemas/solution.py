@@ -1,12 +1,9 @@
-import enum
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 
-
-class LanguageEnum(str, enum.Enum):
-    python = "python"
+from app.common.enums import LanguageEnum
 
 
 class SolutionBase(BaseModel):
@@ -15,6 +12,12 @@ class SolutionBase(BaseModel):
     code_file_url: Optional[str] = None
     description: Optional[str] = None
     is_accepted: Optional[bool] = False
+
+    @field_validator("language", mode="before")
+    def lowercase_language(cls, v):
+        if isinstance(v, str):
+            return v.lower()
+        return v
 
 
 class SolutionCreate(SolutionBase):

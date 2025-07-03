@@ -1,15 +1,9 @@
-import enum
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 
-
-class DifficultyEnum(str, enum.Enum):
-    easy = "easy"
-    medium = "medium"
-    hard = "hard"
-    special = "special"
+from app.common.enums import DifficultyEnum
 
 
 class ProblemBase(BaseModel):
@@ -18,6 +12,12 @@ class ProblemBase(BaseModel):
     source: Optional[str] = None
     difficulty: Optional[DifficultyEnum] = None
     problem_pdf_url: Optional[str] = None
+
+    @field_validator("difficulty", mode="before")
+    def lowercase_difficulty(cls, v):
+        if isinstance(v, str):
+            return v.lower()
+        return v
 
 
 class ProblemCreate(ProblemBase):
