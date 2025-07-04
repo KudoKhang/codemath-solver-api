@@ -3,12 +3,12 @@ from typing import Optional
 
 from pydantic import BaseModel, field_validator
 
-from app.common.enums import LanguageEnum
+from app.common.enums import ProgrammingLanguageEnum
 
 
 class SolutionBase(BaseModel):
     problem_id: int
-    language: Optional[LanguageEnum] = None
+    language: Optional[ProgrammingLanguageEnum] = None
     code_file_url: Optional[str] = None
     description: Optional[str] = None
     is_accepted: Optional[bool] = False
@@ -26,15 +26,6 @@ class SolutionCreate(SolutionBase):
 
 class SolutionUpdate(SolutionBase):
     pass
-
-
-class SolutionInDBBase(SolutionBase):
-    id: int
-    created_at: Optional[datetime] = None
-    updated_at: Optional[datetime] = None
-
-    class Config:
-        orm_mode = True
 
 
 class SolutionOutput(SolutionBase):

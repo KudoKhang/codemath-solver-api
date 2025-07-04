@@ -14,7 +14,7 @@ class CRUDProblem(CRUDBase[Problem]):
         return db.query(Problem).offset(skip).limit(limit).all()
 
     def create(self, db: Session, obj_in: ProblemCreate):
-        db_obj = Problem(**obj_in.dict())
+        db_obj = Problem(**obj_in.model_dump())
         db.add(db_obj)
         db.commit()
         db.refresh(db_obj)

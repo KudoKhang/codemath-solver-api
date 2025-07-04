@@ -1,9 +1,17 @@
-from sqlalchemy import Column, Integer, String
+from __future__ import annotations
 
-from app.db.base import Base
+from typing import List
+
+from sqlalchemy import String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from app.db.models.base import BaseModel, problem_tags_table
 
 
-class Tag(Base):
+class Tag(BaseModel):
     __tablename__ = "tags"
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String(50), unique=True, nullable=False, index=True)
+    name: Mapped[str] = mapped_column(String(50), unique=True)
+    slug: Mapped[str] = mapped_column(String(50), unique=True)
+
+    # Many-to-many relationship with Problem through ProblemTag
+    problems: Mapped[List["Problem"]] = relationship("Problem", secondary=problem_tags_table, back_populates="tags")

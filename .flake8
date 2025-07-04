@@ -9,3 +9,4 @@ exclude =
     dist,
     .venv,
     venv,
+    app/db/models/*,
