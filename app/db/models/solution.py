@@ -5,7 +5,7 @@ from typing import Optional
 from sqlalchemy import CheckConstraint, ForeignKey, Integer, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.common.enums import SolutionStatusEnum
+from app.common.enums import CodeFileTypeEnum, SolutionStatusEnum
 from app.db.models.base import BaseModel
 
 
@@ -15,6 +15,8 @@ class Solution(BaseModel):
     created_by: Mapped[int] = mapped_column(ForeignKey("accounts.id", ondelete="RESTRICT"))
     last_edited_by: Mapped[Optional[int]] = mapped_column(ForeignKey("accounts.id", ondelete="SET NULL"))
     language_id: Mapped[int] = mapped_column(ForeignKey("programming_languages.id", ondelete="RESTRICT"))
+    description: Mapped[Optional[str]] = mapped_column(Text)
+    source_code_type: Mapped[CodeFileTypeEnum] = mapped_column(Integer, default=CodeFileTypeEnum.TEXT.value)
     source_code: Mapped[str] = mapped_column(Text)
     status: Mapped[SolutionStatusEnum] = mapped_column(Integer, default=SolutionStatusEnum.PENDING.value)
     score: Mapped[Optional[int]] = mapped_column(Integer)

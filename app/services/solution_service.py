@@ -1,4 +1,5 @@
 from fastapi import HTTPException
+from sqlalchemy import desc
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
@@ -48,4 +49,4 @@ class SolutionService:
     def get_accepted_solution_by_problem_id(db: Session, problem_id: int):
         from app.db.models.solution import Solution
 
-        return db.query(Solution).filter(Solution.problem_id == problem_id, Solution.is_accepted).first()
+        return db.query(Solution).filter(Solution.problem_id == problem_id).order_by(desc(Solution.status)).first()

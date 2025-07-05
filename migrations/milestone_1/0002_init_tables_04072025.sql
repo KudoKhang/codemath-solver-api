@@ -45,6 +45,12 @@ CREATE TABLE programming_languages (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+INSERT INTO programming_languages (id, name, version, slug)
+VALUES
+  (1, 'Python', '3.10', 'python'),
+  (2, 'C', '11', 'c'),
+  (3, 'C++', '17', 'cpp');
+
 -- Bảng: tags
 -- Mục đích: Quản lý các thẻ (tags) để phân loại bài toán.
 CREATE TABLE tags (
@@ -112,6 +118,7 @@ CREATE TABLE solutions (
   last_edited_by INT,
   language_id INT NOT NULL,
   description TEXT,
+  source_code_type INTEGER CHECK (source_code_type IN (1, 2)), -- 1: TEXT, 2: FILE
   source_code TEXT NOT NULL,
   status INTEGER CHECK (status IN (1, 2, 3, 4, 5)), -- 1: PENDING, 2: ACCEPTED, 3: WRONG_ANSWER, 4: TIME_LIMIT_EXCEEDED, 5: RUNTIME_ERROR
   score INT,

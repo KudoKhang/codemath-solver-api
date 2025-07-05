@@ -36,9 +36,9 @@ def get_lectures(db: Session = Depends(get_db)):
     return APIResponse.success(data=lectures, status_code=status.HTTP_200_OK)
 
 
-@router.get("/{problem_code}", response_model=APIResponse)
-def get_lecture(problem_code: str, db: Session = Depends(get_db)):
-    lecture = LectureService.get_lecture(db, problem_code)
+@router.get("/{platform_id}/{platform_specific_code}", response_model=APIResponse)
+def get_lecture(platform_id: int, platform_specific_code: str, db: Session = Depends(get_db)):
+    lecture = LectureService.get_lecture(db, platform_id, platform_specific_code)
     if not lecture:
         return APIResponse.failure(message="Problem not found", status_code=404)
     return APIResponse.success(data=lecture, status_code=status.HTTP_200_OK)
@@ -50,15 +50,20 @@ def create_lecture(data: LectureInputSchema = Body(...), db: Session = Depends(g
     return APIResponse.success(data={"id": lecture_id}, status_code=status.HTTP_201_CREATED)
 
 
-@router.put("/{problem_code}", response_model=APIResponse)
-def update_lecture(problem_code: str, data: LectureInputSchema = Body(...), db: Session = Depends(get_db)):
+@router.put("/{platform_id}/{platform_specific_code}", response_model=APIResponse)
+def update_lecture(
+    platform_id: int, platform_specific_code: str, data: LectureInputSchema = Body(...), db: Session = Depends(get_db)
+):
+    # Ensure the input schema matches the path params
+    data.problem.platform_id = platform_id
+    data.problem.platform_specific_code = platform_specific_code
     lecture_id = LectureService.create_or_update_lecture(db, data, is_update=True)
     return APIResponse.success(data={"id": lecture_id}, status_code=status.HTTP_200_OK)
 
 
-@router.delete("/{problem_code}", response_model=APIResponse)
-def delete_lecture(problem_code: str, db: Session = Depends(get_db)):
-    lecture_id = LectureService.delete_lecture(db, problem_code)
+@router.delete("/{platform_id}/{platform_specific_code}", response_model=APIResponse)
+def delete_lecture(platform_id: int, platform_specific_code: str, db: Session = Depends(get_db)):
+    lecture_id = LectureService.delete_lecture(db, platform_id, platform_specific_code)
     if not lecture_id:
         return APIResponse.failure(message="Problem not found", status_code=404)
     return APIResponse.success(data={"id": lecture_id}, status_code=status.HTTP_200_OK)

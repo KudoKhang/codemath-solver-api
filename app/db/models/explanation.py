@@ -14,6 +14,7 @@ class Explanation(BaseModel):
     created_by: Mapped[int] = mapped_column(ForeignKey("accounts.id", ondelete="RESTRICT"))
     last_edited_by: Mapped[Optional[int]] = mapped_column(ForeignKey("accounts.id", ondelete="SET NULL"))
     title: Mapped[Optional[str]] = mapped_column(String(255))
+    description: Mapped[Optional[str]] = mapped_column(Text)
     content: Mapped[str] = mapped_column(Text)
     upvotes: Mapped[int] = mapped_column(Integer, default=0, server_default="0")
     downvotes: Mapped[int] = mapped_column(Integer, default=0, server_default="0")

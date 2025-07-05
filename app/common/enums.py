@@ -28,6 +28,11 @@ class SolutionStatusEnum(int, enum.Enum):
     RUNTIME_ERROR = 5
 
 
+class CodeFileTypeEnum(int, enum.Enum):
+    TEXT = 1
+    FILE = 2
+
+
 class RoleEnum(int, enum.Enum):
     USER = 1
     EDITOR = 2
